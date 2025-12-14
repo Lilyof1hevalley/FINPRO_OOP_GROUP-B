@@ -1,4 +1,4 @@
-package com.groupB.FE;
+package com.groupB.Frontend;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
