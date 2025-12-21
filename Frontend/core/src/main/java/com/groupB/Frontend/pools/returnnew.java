@@ -1,4 +1,4 @@
 package com.groupB.Frontend.pools;
 
-public class EnemyPool {
+public enum returnnew {
 }
