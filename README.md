@@ -1,4 +1,5 @@
-#**ASLAB ATTACK**
+#ASLAB ATTACK
+---
 AslabAttack is a retro arcade shooter that combines classic Space Invaders gameplay with modern pixel art aesthetics. Set against a gorgeous cosmic backdrop, players control a lone defender at the bottom of the screen, shooting upward at descending waves of alien bugs. Simple to learn but challenging to master, the game features increasing difficulty, multiple enemy types, and competitive leaderboards.
 
 **101 Guide to Play!**
