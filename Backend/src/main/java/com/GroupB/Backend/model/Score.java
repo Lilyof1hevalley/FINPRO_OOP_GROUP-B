@@ -1,4 +1,4 @@
-package com.GroupB.Backend.model;
+package main.java.com.GroupB.Backend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
