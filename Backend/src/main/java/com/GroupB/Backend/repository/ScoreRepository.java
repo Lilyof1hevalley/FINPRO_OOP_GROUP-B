@@ -1,5 +1,4 @@
-
-package com.GroupB.Backend.repository;
+package main.java.com.GroupB.Backend.repository;
 
 import com.GroupB.Backend.repository.ScoreRepository;
 import org.springframework.data.domain.Score;
