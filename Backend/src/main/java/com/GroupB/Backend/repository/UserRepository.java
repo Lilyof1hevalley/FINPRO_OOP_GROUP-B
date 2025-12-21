@@ -1,7 +1,7 @@
-// backend/src/main/java/com/example/spaceshooter/repository/UserRepository.java
-package com.example.space_shooter_backend.repository;
+package com.GroupB.Backend.repository;
 
-import com.example.space_shooter_backend.model.User;
+import com.GroupB.Backend.repository.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;

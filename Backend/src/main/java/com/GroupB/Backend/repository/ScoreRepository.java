@@ -1,7 +1,8 @@
-// backend/src/main/java/com/example/spaceshooter/repository/ScoreRepository.java
-package com.example.space_shooter_backend.repository;
 
-import com.example.space_shooter_backend.model.Score;
+package com.GroupB.Backend.repository;
+
+import com.GroupB.Backend.repository.ScoreRepository;
+import org.springframework.data.domain.Score;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

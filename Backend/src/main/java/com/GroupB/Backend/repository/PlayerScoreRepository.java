@@ -1,7 +1,6 @@
-// backend/src/main/java/com/example/spaceshooter/repository/PlayerScoreRepository.java
-package com.example.space_shooter_backend.repository;
+package com.GroupB.Backend.repository;
 
-import com.example.space_shooter_backend.model.PlayerScore;
+import com.GroupB.Backend.repository.PlayerScoreRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
