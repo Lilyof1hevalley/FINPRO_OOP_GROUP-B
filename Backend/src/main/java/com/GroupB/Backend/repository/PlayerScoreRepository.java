@@ -1,4 +1,4 @@
-package com.GroupB.Backend.repository;
+package main.java.com.GroupB.Backend.repository;
 
 import com.GroupB.Backend.repository.PlayerScoreRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
