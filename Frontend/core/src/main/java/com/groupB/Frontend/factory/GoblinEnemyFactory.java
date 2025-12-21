@@ -1,7 +1,7 @@
-package com.example.spaceshooter.factory;
+package com.groupB.Frontend.factory;
 
-import com.example.spaceshooter.entity.Enemy;
-import com.example.spaceshooter.entity.OrcEnemy;
+import com.groupB.Frontend.entity.Enemy;
+import com.groupB.Frontend.entity.OrcEnemy;
 
 public class OrcEnemyFactory implements EnemyFactory {
     @Override
