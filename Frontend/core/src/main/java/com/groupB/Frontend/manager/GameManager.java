@@ -1,4 +1,4 @@
-package com.groupB.Frontend.managers;
+package com.groupB.Frontend.manager;
 
-public class GameStateManager {
+public class GameManager {
 }
