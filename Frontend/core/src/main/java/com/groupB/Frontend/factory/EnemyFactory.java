@@ -1,4 +1,3 @@
-// core/src/com/example/spaceshooter/factory/EnemyFactory.java
 package com.groupB.Frontend.factory;
 
 import com.groupB.Frontend.entity.Enemy;
