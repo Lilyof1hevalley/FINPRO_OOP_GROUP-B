@@ -13,7 +13,6 @@ public class Assets {
     public static Texture whitePixel, background, shipLevel1, shipLevel2, shipLevel3, finalBoss;
     public static List<Texture> enemyTextures = new ArrayList<>();
 
-    // DECLARE INI SUPAYA ERROR MERAH HILANG
     public static Music backgroundMusic;
     public static Sound shootSound;
     public static Sound explosionSound;
@@ -31,11 +30,9 @@ public class Assets {
         shipLevel3 = new Texture("level3.png");
         finalBoss = new Texture("final boss.png");
 
-        // FOTO TEMEN-TEMEN LO
         String[] enemies = {"alvin.png", "azra.png", "benedict.png", "deandro.png", "dimas dermawan.png", "fairuz muhammad.png", "george william.png", "ikhsan.png", "kamal.png", "musyaffa.png", "nelson.png", "raditya alif.png", "raihan ihsan.png", "ryan.png", "sofwan.png", "yasmin.png"};
         for (String file : enemies) { enemyTextures.add(new Texture(Gdx.files.internal(file))); }
 
-        // LOAD MUSIK LO (Pastikan nama file di folder assets adalah "bgm.mp3")
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("bgm.mp3"));
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(0.5f);
