@@ -12,7 +12,6 @@ public abstract class ShipDecorator implements SpaceShip {
         this.decoratedShip = ship;
     }
 
-    // Delegasi semua metode ke objek yang dihiasi
     @Override
     public void takeDamage(int damage) {
         decoratedShip.takeDamage(damage);
