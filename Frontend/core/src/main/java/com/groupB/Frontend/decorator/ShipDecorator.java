@@ -1,4 +1,3 @@
-// core/src/com/example/spaceshooter/decorator/ShipDecorator.java
 package com.groupB.Frontend.decorator;
 
 import com.groupB.Frontend.entity.SpaceShip;
@@ -6,7 +5,6 @@ import com.groupB.Frontend.observer.Observer;
 import com.groupB.Frontend.strategy.ShootingStrategy;
 import com.badlogic.gdx.math.Vector2;
 
-// Sekarang valid: implements interface
 public abstract class ShipDecorator implements SpaceShip {
     protected SpaceShip decoratedShip;
 
