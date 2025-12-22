@@ -1,4 +1,3 @@
-// core/src/com/example/spaceshooter/SpaceShooterGame.java
 package com.groupB.Frontend;
 
 import com.badlogic.gdx.Game;
