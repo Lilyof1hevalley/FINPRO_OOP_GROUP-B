@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
     private GameState gameState = GameState.PLAYING;
     private final int SCREEN_SIZE = 800;
     private int currentLevel = 1;
-    private boolean scoreSent = false; // Flag to prevent multiple API calls
+    private boolean scoreSent = false;
 
     private Vector2 bossPos = new Vector2(250, 900);
     private int bossHP = 200;
@@ -47,22 +47,17 @@ public class GameScreen implements Screen {
         ship = new BasicSpaceShip(400, 100);
         ship.setShootingStrategy(new SingleShotStrategy(bullets));
 
-        // Reset game manager and score sent flag
         GameManager.getInstance().reset(game.getPlayerName(), 0);
         scoreSent = false;
 
         if (Assets.backgroundMusic != null) Assets.backgroundMusic.play();
     }
 
-    /**
-     * Sends the player's final score and health to the Spring Boot Backend.
-     */
     private void sendScoreToBackend(String name, int score, int health) {
         Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.POST);
         request.setUrl("http://localhost:8080/api/score");
         request.setHeader("Content-Type", "application/json");
 
-        // Format the JSON payload manually to match the Backend's ScoreSubmissionRequest class
         String json = "{\"playerName\":\"" + name + "\", \"score\":" + score + ", \"health\":" + health + "}";
         request.setContent(json);
 
@@ -71,16 +66,12 @@ public class GameScreen implements Screen {
             public void handleHttpResponse(Net.HttpResponse httpResponse) {
                 Gdx.app.log("API", "SUCCESSFULLY SAVED TO NEON: " + httpResponse.getResultAsString());
             }
-
             @Override
             public void failed(Throwable t) {
-                Gdx.app.error("API", "FAILED: Is the Backend running? " + t.getMessage());
+                Gdx.app.error("API", "FAILED: " + t.getMessage());
             }
-
             @Override
-            public void cancelled() {
-                Gdx.app.log("API", "HTTP Request was cancelled.");
-            }
+            public void cancelled() {}
         });
     }
 
@@ -111,12 +102,6 @@ public class GameScreen implements Screen {
             batch.setColor(Color.WHITE);
         }
 
-        for (ExplosionParticle ep : explosions) {
-            batch.setColor(1, 1, 1, ep.timer * 3);
-            batch.draw(Assets.whitePixel, ep.x, ep.y, 30, 30);
-        }
-        batch.setColor(Color.WHITE);
-
         for (Bullet b : bullets) {
             if (b.active) {
                 batch.setColor(Color.PINK);
@@ -132,7 +117,18 @@ public class GameScreen implements Screen {
 
         uiFont.draw(batch, "SCORE: " + GameManager.getInstance().getScore(), 20, 780);
         uiFont.draw(batch, "HP: " + ship.getHealth(), 20, 730);
-        uiFont.draw(batch, "PLAYER: " + game.getPlayerName(), 600, 780);
+
+        uiFont.draw(batch, "PLAYER: " + game.getPlayerName(), 20, 780, 760, Align.right, false);
+
+        if (levelUpTimer > 0) {
+            uiFont.getData().setScale(4f);
+            uiFont.setColor(Color.YELLOW);
+            String msg = bossActive ? "FINAL BOSS!" : "LEVEL UP!";
+            uiFont.draw(batch, msg, 0, 450, SCREEN_SIZE, Align.center, false);
+
+            uiFont.getData().setScale(2.5f);
+            uiFont.setColor(Color.WHITE);
+        }
     }
 
     private void renderEndScreen() {
@@ -146,18 +142,21 @@ public class GameScreen implements Screen {
 
     private void update(float delta) {
         if (gameState != GameState.PLAYING) {
-            // Trigger score submission once when transitioning to non-playing state
             if (!scoreSent) {
-                String nameToSave = (game.getPlayerName() == null || game.getPlayerName().isEmpty()) ? "Player1" : game.getPlayerName();
-                sendScoreToBackend(nameToSave, GameManager.getInstance().getScore(), ship.getHealth());
+                sendScoreToBackend(game.getPlayerName(), GameManager.getInstance().getScore(), ship.getHealth());
                 scoreSent = true;
             }
-
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) resetGame();
             return;
         }
 
         handleLevelProgression(delta);
+
+        if (levelUpTimer > 0) {
+            levelUpTimer -= delta;
+            return;
+        }
+
         handleInput(delta);
         updateEntities(delta);
         checkCollisions();
@@ -165,11 +164,22 @@ public class GameScreen implements Screen {
 
     private void handleLevelProgression(float delta) {
         int score = GameManager.getInstance().getScore();
-        if (score >= 5000 && currentLevel == 1) currentLevel = 2;
+        if (score >= 5000 && currentLevel == 1) {
+            currentLevel = 2;
+            levelUpTimer = 2.0f; // Munculin tulisan LEVEL UP kuning & pause game
+        }
+
+        if (score >= 10000 && currentLevel == 2) {
+            currentLevel = 3;
+            levelUpTimer = 2.0f;
+        }
+
         if (score >= 15000 && !bossActive) {
             bossActive = true;
             enemies.clear();
+            levelUpTimer = 3.0f; // Boss warning pause
         }
+
         if (score >= 20000) gameState = GameState.WIN;
     }
 
@@ -212,11 +222,6 @@ public class GameScreen implements Screen {
     private void checkCollisions() {
         Rectangle sRect = new Rectangle(ship.getPosition().x - 40, ship.getPosition().y - 40, 80, 80);
 
-        // Ship collision with Boss or Enemies
-        if (bossActive && sRect.overlaps(new Rectangle(bossPos.x, bossPos.y, 300, 300))) {
-            ship.takeDamage(100); // Instant death on boss collision
-        }
-
         for (Enemy e : enemies) {
             if (e.isAlive() && sRect.overlaps(new Rectangle(e.getX(), e.getY(), 120, 120))) {
                 ship.takeDamage(1);
@@ -224,7 +229,6 @@ public class GameScreen implements Screen {
             }
         }
 
-        // Bullet collisions
         for (Bullet b : bullets) {
             if (!b.active) continue;
             Rectangle bRect = new Rectangle(b.x - 4, b.y, 8, b.height);
@@ -247,10 +251,7 @@ public class GameScreen implements Screen {
             }
         }
 
-        // Check if Game Over
-        if (ship.getHealth() <= 0) {
-            gameState = GameState.GAME_OVER;
-        }
+        if (ship.getHealth() <= 0) gameState = GameState.GAME_OVER;
     }
 
     private void resetGame() {

@@ -26,8 +26,8 @@ public class Assets {
 
         background = new Texture("bg.jpeg");
         shipLevel1 = new Texture("level1.png");
-        shipLevel2 = new Texture("level2.png");
-        shipLevel3 = new Texture("level3.png");
+        shipLevel2 = new Texture("level3.png");
+        shipLevel3 = new Texture("level2.png");
         finalBoss = new Texture("final boss.png");
 
         String[] enemies = {"alvin.png", "azra.png", "benedict.png", "deandro.png", "dimas dermawan.png", "fairuz muhammad.png", "george william.png", "ikhsan.png", "kamal.png", "musyaffa.png", "nelson.png", "raditya alif.png", "raihan ihsan.png", "ryan.png", "sofwan.png", "yasmin.png"};
